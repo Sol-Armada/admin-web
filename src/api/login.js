@@ -15,7 +15,7 @@ export const login = async function (userCode) {
         }
       )
       .then((resp) => {
-        resolve(resp.data.user);
+        resolve(resp.data);
       })
       .catch((error) => {
         if (error != undefined) {

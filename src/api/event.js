@@ -1,4 +1,7 @@
 import axios from 'axios'
+import { useUserStore } from '@/store/UserStore'
+const userStore = useUserStore()
+const token = userStore.token
 
 export const newEvent = async function (event) {
   return new Promise((resolve, reject) => {
@@ -9,6 +12,7 @@ export const newEvent = async function (event) {
         {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
           },
         }
       )
@@ -30,6 +34,7 @@ export const updateEvent = async function (event) {
         {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
           },
         }
       )

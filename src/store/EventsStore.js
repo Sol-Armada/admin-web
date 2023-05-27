@@ -47,7 +47,14 @@ export const useEventsStore = defineStore("events", {
     async fetch() {
       this.loading = true
       try {
-        const resp = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events`)
+        const resp = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+        }
+      )
         const events = resp.data.events
         this.events = events
       } catch (err) {
@@ -59,7 +66,14 @@ export const useEventsStore = defineStore("events", {
     async delete(id) {
       this.loading = true
       try {
-        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/events/${id}`)
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/events/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+        }
+      )
       } catch (err) {
         this.error = err.message
       } finally {
