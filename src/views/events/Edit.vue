@@ -59,7 +59,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useTheme } from 'vuetify'
-import { NumberToWord, Rank, Capitalize } from '@/utils'
+import { NumberToWord, Capitalize } from '@/utils'
 import { v4 as uuidv4 } from 'uuid'
 import { newEvent, updateEvent } from '@/api/event'
 import '@vuepic/vue-datepicker/dist/main.css'
