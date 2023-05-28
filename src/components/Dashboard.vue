@@ -24,7 +24,7 @@
 
                     <v-card-text class="py-0">
                         <v-row align="center" class="pa-2 justify-center align-center">
-                            <v-col class="text-h4">99,999,999</v-col>
+                            <v-col class="text-h4">{{ balance.toLocaleString() }}</v-col>
                         </v-row>
                     </v-card-text>
                 </v-card>
@@ -38,9 +38,13 @@ import { onBeforeMount, computed } from 'vue'
 import { storeToRefs } from 'pinia';
 import RankCount from '@/components/dashboard/RankCount'
 import { useUsersStore } from "@/store/UsersStore"
+import { useBankStore } from '@/store/BankStore'
 
 const usersStore = useUsersStore()
 const { users } = storeToRefs(usersStore)
+
+const bankStore = useBankStore()
+const { balance } = storeToRefs(bankStore)
 
 const admiralCount = computed(() => users.value.get('admiral').size)
 const commanderCount = computed(() => users.value.get('commander').size)
@@ -52,6 +56,7 @@ const memberCount = computed(() => users.value.get('member').size)
 onBeforeMount(() => {
     try {
         usersStore.fetch()
+        bankStore.fetch()
     } catch (error) {
         console.error(error)
     }

@@ -1,5 +1,5 @@
 <template>
-    <v-col cols="2">
+    <v-col cols="12" xl="2" lg="3" md="4" sm="4">
         <v-card :title="user.name" class="text-center">
             <v-card-actions v-if="issues">
                 <v-row>
