@@ -1,6 +1,9 @@
 import { defineStore } from "pinia";
 import axios from 'axios';
 import { EventStatus } from "@/utils";
+import { useUserStore } from '@/store/UserStore'
+const userStore = useUserStore()
+const token = userStore.token
 
 export const useEventsStore = defineStore("events", {
   state: () => ({
@@ -19,7 +22,7 @@ export const useEventsStore = defineStore("events", {
         ]);
         state.events.forEach(event => {
           let status = EventStatus[event.status]
-          if (["notified_day", "notified_hour"].includes(status)) {
+          if (["notified_day", "notified_hour", "announced"].includes(status)) {
             status = "created"
           }
           events.get(status).push(event)

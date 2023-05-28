@@ -7,9 +7,7 @@ const token = userStore.token
 
 const usersMap = new Map()
 Ranks.forEach((rank) => {
-  if (rank !== 'guest') {
-    usersMap.set(rank, new Map())
-  }
+  usersMap.set(rank, new Map())
 })
 
 export const useUsersStore = defineStore("users", {
@@ -34,8 +32,8 @@ export const useUsersStore = defineStore("users", {
         const users = resp.data.users
         users.forEach((user) => {
           let r = GetRank(user.rank)
-          if (r !== undefined && r !== 'guest') {
-            this.users.get(GetRank(user.rank)).set(user.id, user)
+          if (r !== undefined) {
+            this.users.get(r).set(user.id, user)
           }
         })
       } catch (err) {

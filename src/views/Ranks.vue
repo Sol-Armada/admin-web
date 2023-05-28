@@ -4,9 +4,9 @@
             <v-card-actions>
                 <v-text-field density="compact" variant="solo" label="Filter" append-inner-icon="mdi-magnify" single-line
                     hide-details v-model="filter"></v-text-field>
-                    <!-- <v-spacer></v-spacer> -->
+                <!-- <v-spacer></v-spacer> -->
 
-                    <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+                <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
             </v-card-actions>
             <v-expand-transition>
                 <div v-show="show">
@@ -17,11 +17,8 @@
                         </v-col>
                         <v-col cols="2">
                             <v-select
-                                :items="['all','admirals','commanders','lieutenants','specialists','technicians','members']"
-                                v-model="filterRank"
-                                label="Filter by Rank"
-                                variant="outlined"
-                            ></v-select>
+                                :items="['all', 'admirals', 'commanders', 'lieutenants', 'specialists', 'technicians', 'members']"
+                                v-model="filterRank" label="Filter by Rank" variant="outlined"></v-select>
                         </v-col>
                     </v-row>
                 </div>
@@ -31,8 +28,9 @@
     <v-container v-if="admiralCount > 0 && (filterRank == 'admirals' || filterRank == 'all')">
         <v-row>
             <v-col cols="12">
-                <h1>Admiral</h1>
+                <h1 style="color: #235cff;">Admiral</h1>
             </v-col>
+            <v-divider thickness="10" color="#235cff"></v-divider>
             <Rank v-for="[_, user] in admirals" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
@@ -40,8 +38,9 @@
     <v-container v-if="commanderCount > 0 && (filterRank == 'commanders' || filterRank == 'all')">
         <v-row>
             <v-col cols="12">
-                <h1>Commander</h1>
+                <h1 style="color: #308ca7;">Commander</h1>
             </v-col>
+            <v-divider thickness="10" color="#308ca7"></v-divider>
             <Rank v-for="[_, user] in commanders" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
@@ -49,8 +48,9 @@
     <v-container v-if="lieutenantCount > 0 && (filterRank == 'lieutenants' || filterRank == 'all')">
         <v-row>
             <v-col cols="12">
-                <h1>Lieutenant</h1>
+                <h1 style="color: #24ad32;">Lieutenant</h1>
             </v-col>
+            <v-divider thickness="10" color="#24ad32"></v-divider>
             <Rank v-for="[_, user] in lieutenants" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
@@ -58,8 +58,9 @@
     <v-container v-if="specialistCount > 0 && (filterRank == 'specialists' || filterRank == 'all')">
         <v-row>
             <v-col cols="12">
-                <h1>Specialist</h1>
+                <h1 style="color: #da5c5c;">Specialist</h1>
             </v-col>
+            <v-divider thickness="10" color="#da5c5c"></v-divider>
             <Rank v-for="[_, user] in specialists" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
@@ -67,18 +68,30 @@
     <v-container v-if="technicianCount > 0 && (filterRank == 'technicians' || filterRank == 'all')">
         <v-row>
             <v-col cols="12">
-                <h1>Technician</h1>
+                <h1 style="color: #e69737;">Technician</h1>
             </v-col>
+            <v-divider thickness="10" color="#e69737"></v-divider>
             <Rank v-for="[_, user] in technicians" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
     </v-container>
     <v-container v-if="memberCount > 0 && (filterRank == 'members' || filterRank == 'all')">
         <v-row>
-            <v-col cols="12">
-                <h1>Member</h1>
+            <v-col v-sticky cols="12">
+                <h1 style="color: #ffc900;">Member</h1>
             </v-col>
+            <v-divider thickness="10" color="#ffc900"></v-divider>
             <Rank v-for="[_, user] in members" :user="user" :increment="usersStore.increment"
+                :decrement="usersStore.decrement" :loading="loading" />
+        </v-row>
+    </v-container>
+    <v-container v-if="guestCount > 0 && (filterRank == 'guest' || filterRank == 'all')">
+        <v-row>
+            <v-col cols="12">
+                <h1>Guest</h1>
+            </v-col>
+            <v-divider thickness="10"></v-divider>
+            <Rank v-for="[_, user] in guests" :user="user" :increment="usersStore.increment"
                 :decrement="usersStore.decrement" :loading="loading" />
         </v-row>
     </v-container>
@@ -114,6 +127,9 @@ const technicianCount = computed(() => technicians.value.length)
 
 const members = computed(() => Array.from(users.value.get('member')).filter(user => filterUser(user[1])))
 const memberCount = computed(() => members.value.length)
+
+const guests = computed(() => Array.from(users.value.get('guest')).filter(user => filterUser(user[1])))
+const guestCount = computed(() => guests.value.length)
 
 onMounted(() => {
     usersStore.fetch()
