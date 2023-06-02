@@ -20,8 +20,8 @@
 
           <template v-slot:append>
             <v-list density="compact" nav>
-              <v-list-item prepend-icon="mdi-light-switch" title="Light" value="light" v-if="theme.global.current.value.dark" v-on:click="theme.global.name.value = 'light'"></v-list-item>
-              <v-list-item prepend-icon="mdi-light-switch-off" title="Dark" value="dark" v-else v-on:click="theme.global.name.value = 'dark'"></v-list-item>
+              <v-list-item prepend-icon="mdi-light-switch" title="Light" value="light" v-if="theme.global.current.value.dark" v-on:click="lightSwitch"></v-list-item>
+              <v-list-item prepend-icon="mdi-light-switch-off" title="Dark" value="dark" v-else v-on:click="lightSwitch"></v-list-item>
               <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout" v-on:click="userStore.logout"></v-list-item>
             </v-list>
           </template>
@@ -57,6 +57,18 @@ if (!mdAndDown.value) {
   mini.value = true
 }
 const theme = useTheme()
+
+theme.global.name.value = localStorage.getItem("theme") || 'dark'
+
+function lightSwitch() {
+  if (theme.global.current.value.dark) {
+      theme.global.name.value = 'light'
+  } else {
+      theme.global.name.value = 'dark'
+  }
+  
+  localStorage.setItem("theme", theme.global.name.value)
+}
 </script>
 
 <!-- <style lang="scss">
