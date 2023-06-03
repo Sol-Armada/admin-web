@@ -2,7 +2,7 @@
     <v-list-item
         :key="title"
         :title="title"
-        :subtitle="'Minimum Rank: ' + minRank + ' | Max Steats: ' + (max != 0 ? max : 'Unlimited')"
+        :subtitle="'Minimum Rank: ' + minRankValues[minRank] + ' | Max Steats: ' + (max != 0 ? max : 'Unlimited')"
     >
         <template v-slot:prepend>
             <v-avatar>
@@ -33,11 +33,23 @@ const props = defineProps({
     icon: String,
     title: String,
     subtitle: String,
-    minRank: String,
+    minRank: Number,
     max: String,
     deletable: Boolean,
     onDelete: Function,
 })
+
+const minRankValues = {
+    99: 'Anyone',
+    7: 'Recruit',
+    6: 'Member',
+    5: 'Technician',
+    4: 'Specialists',
+    3: 'Lieutenant',
+    2: 'Commander',
+    1: 'Admiral'
+}
+
 </script>
 <style lang="scss">
 emoji-picker {

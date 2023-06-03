@@ -5,20 +5,27 @@
                 <v-col cols="12" xl="6">
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field label="Event Title*" variant="outlined" v-model="event.name" required></v-text-field>
+                            <v-text-field label="Event Title*" variant="outlined" v-model="event.name"
+                                required></v-text-field>
                         </v-col>
                         <v-col cols="12" lg="6" sm="12">
                             Start*
-                            <VueDatePicker v-model="event.start_time" name="start-date" :dark="theme.global.name.value == 'dark'"
-                                required></VueDatePicker>
+                            <VueDatePicker v-model="event.start_time" name="start-date"
+                                :dark="theme.global.name.value == 'dark'" required></VueDatePicker>
                         </v-col>
                         <v-col cols="12" lg="6" sm="12">
                             End*
-                            <VueDatePicker v-model="event.end_time" name="end-date" :dark="theme.global.name.value == 'dark'"
-                                required></VueDatePicker>
+                            <VueDatePicker v-model="event.end_time" name="end-date"
+                                :dark="theme.global.name.value == 'dark'" required></VueDatePicker>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-select
+                                :items="[{ name: 'disabled', value: 0 }, { name: 'daily', value: 1 }, { name: 'weekly', value: 2 }, { name: 'monthly', value: 3 }]"
+                                item-title="name" item-value="value" v-model="event.repeat" label="repeat" variant="outlined"></v-select>
                         </v-col>
                         <v-col cols="12">
-                            <v-textarea v-model="event.description" label="Description*" variant="outlined" required></v-textarea>
+                            <v-textarea v-model="event.description" label="Description*" variant="outlined"
+                                required></v-textarea>
                         </v-col>
                         <v-col cols="12">
                             <v-text-field v-model="event.cover" label="Cover Image" variant="outlined"
@@ -30,9 +37,8 @@
                         <v-col cols="7">
                             <v-list>
                                 <Position v-for="position in positions" :id="position.id" :title="position.name"
-                                    :minRank="String(position.min_rank)" :max="String(position.max)"
-                                    :icon="position.emoji" :deletable="position.deletable"
-                                    :onDelete=deletePos />
+                                    :minRank="position.min_rank" :max="String(position.max)" :icon="position.emoji"
+                                    :deletable="position.deletable" :onDelete=deletePos />
                             </v-list>
                         </v-col>
                         <v-col cols="12">
@@ -42,7 +48,8 @@
                                         prepend-icon="mdi-cancel" href="/events">Cancel</v-btn>
                                 </v-col>
                                 <v-col cols="2" class="d-flex justify-center">
-                                    <v-btn rounded="lg" size="large" prepend-icon="mdi-content-save" :onClick="saveEvent">Save</v-btn>
+                                    <v-btn rounded="lg" size="large" prepend-icon="mdi-content-save"
+                                        :onClick="saveEvent">Save</v-btn>
                                 </v-col>
                             </v-row>
                         </v-col>
@@ -80,7 +87,7 @@ const positions = ref([])
 const eventLeadId = uuidv4()
 positions.value.push({
     id: eventLeadId,
-    min_rank: 'lieutenant',
+    min_rank: 3,
     max: 1,
     emoji: ':star:',
     order: 0,
@@ -90,7 +97,7 @@ positions.value.push({
 const extrasId = uuidv4()
 positions.value.push({
     id: extrasId,
-    min_rank: 'anyone',
+    min_rank: 99,
     max: 0,
     emoji: ':calendar:',
     order: 99,
@@ -100,7 +107,9 @@ positions.value.push({
 })
 
 const positionCounter = ref(1)
-const event = ref({})
+const event = ref({
+    repeat: 0
+})
 
 let newPos = ref(defaultPosition())
 
@@ -116,7 +125,7 @@ function addPosition() {
     }
 
     positions.value.push(newPos.value)
-    positionCounter.value = positionCounter.value+1
+    positionCounter.value = positionCounter.value + 1
     newPos.value = defaultPosition()
 }
 
@@ -125,9 +134,9 @@ function deletePos(id) {
 }
 
 function saveEvent() {
-    for (let i = 0; i < positions.value.length; i++) {
-        positions.value[i].min_rank = Rank[positions.value[i].min_rank]
-    }
+    // for (let i = 0; i < positions.value.length; i++) {
+    //     positions.value[i].min_rank = Rank[positions.value[i].min_rank]
+    // }
     event.value.positions = positions.value
 
     if (event.value.id === undefined) {
@@ -148,7 +157,7 @@ function saveEvent() {
 function defaultPosition() {
     return {
         id: uuidv4(),
-        min_rank: 'anyone',
+        min_rank: 99,
         max: 1,
         emoji: ':' + NumberToWord(positionCounter.value) + ':',
         order: positionCounter.value,
