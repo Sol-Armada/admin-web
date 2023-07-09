@@ -5,7 +5,7 @@
                 :value="emoji.replace_colons(newPosition.emoji)" v-model="newPosition.emoji"
                 v-on:focus="hideEmojiPicker = false"></v-text-field>
             <VuemojiPicker dataSource="https://cdn.jsdelivr.net/npm/emoji-picker-element-data@1.3.0/en/github/data.json"
-                :isDark="theme.global.name.value == 'dark'" :hidden="hideEmojiPicker" @emojiClick="selectEmoji" />
+                :isDark="theme.global.name.value == 'dark'" :hidden="hideEmojiPicker" @emojiClick="selectEmoji" :customEmoji="customEmojis" />
         </v-col>
         <v-col cols="4">
             <v-text-field label="Name" variant="outlined" placeholder="Defaults to Sol Armada Logo"
@@ -25,9 +25,10 @@
     </v-row>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useTheme } from 'vuetify'
 import { VuemojiPicker } from 'vuemoji-picker'
+import { getEmojis } from '@/api/emojis'
 import EmojiConvertor from 'emoji-js'
 
 const emoji = new EmojiConvertor()
@@ -41,6 +42,7 @@ const props = defineProps({
 })
 
 const hideEmojiPicker = ref(true)
+const customEmojis = ref([])
 
 const minRankList = [
     { name: 'anyone', value: 99 },
@@ -57,6 +59,16 @@ function selectEmoji(detail) {
     props.newPosition.emoji = ':' + detail.emoji.shortcodes[0] + ':'
     hideEmojiPicker.value = true
 }
+
+onMounted(() => {
+    getEmojis().then(e => {
+        e.forEach(emoji => {
+            customEmojis.value.push(
+                { name: emoji.name, url: 'https://cdn.discordapp.com/emojis/' + emoji.id + '.webp?size=44&quality=lossless', shortcodes: [emoji.name] }
+            )
+        });
+    })
+})
 
 </script>
 <style lang="scss">

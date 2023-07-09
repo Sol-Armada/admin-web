@@ -38,10 +38,11 @@ const props = defineProps({
     loading: Boolean,
 })
 
-const issues = computed(() => props.user.bad_affiliation
+const issues = computed(() => (props.user.bad_affiliation && props.user.rank <= 7)
     || props.user.primary_org == "REDACTED"
     || (props.user.primary_org != 'SOLARMADA' && props.user.rank <= 6)
     || !props.user.rsi_member
+    || props.user.rank > 7
 )
 
 </script>

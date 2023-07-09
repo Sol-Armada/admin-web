@@ -35,7 +35,7 @@
           <v-app-bar-title>Title</v-app-bar-title>
         </v-app-bar>
 
-        <v-main style="min-height: 100vh">
+        <v-main>
           <router-view />
         </v-main>
       </v-layout>

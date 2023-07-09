@@ -35,9 +35,7 @@ export const useEventsStore = defineStore("events", {
         state.fetch()
       }
       return (id) => {
-        console.log(state.events)
         state.events.forEach(event => {
-          console.log(event)
           if (event.id == id) {
             return event
           }

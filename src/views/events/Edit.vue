@@ -32,7 +32,7 @@
                                 placeholder="Defaults to Sol Armada Logo"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <NewPosition :newPosition="newPos" :addPosition="addPosition" />
+                            <NewPosition :newPosition="newPos" :addPosition="addPosition" :emojis="emojis" />
                         </v-col>
                         <v-col cols="7">
                             <v-list>
@@ -134,9 +134,9 @@ function deletePos(id) {
 }
 
 function saveEvent() {
-    // for (let i = 0; i < positions.value.length; i++) {
-    //     positions.value[i].min_rank = Rank[positions.value[i].min_rank]
-    // }
+    for (let i = 0; i < positions.value.length; i++) {
+        positions.value[i].max = Number(positions.value[i].max)
+    }
     event.value.positions = positions.value
 
     if (event.value.id === undefined) {

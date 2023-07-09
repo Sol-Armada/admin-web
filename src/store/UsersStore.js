@@ -37,6 +37,7 @@ export const useUsersStore = defineStore("users", {
           }
         })
       } catch (err) {
+        console.error(err)
         this.error = err.message
       } finally {
         this.loading = false

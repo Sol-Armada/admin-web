@@ -11,6 +11,7 @@
             <RankCount rank="specialist" :count="specialistCount" />
             <RankCount rank="technician" :count="technicianCount" />
             <RankCount rank="member" :count="memberCount" />
+            <RankCount rank="recruit" :count="recruitCount" />
 
             <v-col cols="12">
                 <h1>bank</h1>
@@ -52,13 +53,16 @@ const lieutenantCount = computed(() => users.value.get('lieutenant').size)
 const specialistCount = computed(() => users.value.get('specialist').size)
 const technicianCount = computed(() => users.value.get('technician').size)
 const memberCount = computed(() => users.value.get('member').size)
+const recruitCount = computed(() => users.value.get('recruit').size)
 
 onBeforeMount(() => {
     try {
         usersStore.fetch()
         bankStore.fetch()
     } catch (error) {
-        console.error(error)
+        if (error == "unauthorized") {
+            
+        }
     }
 })
 </script>

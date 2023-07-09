@@ -21,7 +21,6 @@ export const RankIdToName = {
   7: "recruit",
   8: "guest",
   99: "ally",
-  99: "anyone",
 }
 
 export const Ranks = ["admiral", "commander", "lieutenant", "specialist", "technician", "member", "recruit", "guest", "ally"]
@@ -34,7 +33,6 @@ export function GetRank(idOrName) {
   if (typeof idOrName == 'string') {
     return RankNameToId[idOrName]
   }
-  console.log(idOrName)
 }
 
 export function GetRankName(rank) {

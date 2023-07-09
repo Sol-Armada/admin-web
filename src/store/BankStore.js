@@ -21,7 +21,12 @@ export const useBankStore = defineStore("bank", {
                     })
                 this.balance = res.data.balance
             } catch (error) {
-                console.error(error)
+                switch (error.code) {
+                  case "ERR_UNAUTHORIZED":
+                    return "unauthorized"
+                  default:
+                    break;
+                }
                 return null
             }
         },
