@@ -18,11 +18,11 @@
                             <VueDatePicker v-model="event.end_time" name="end-date"
                                 :dark="theme.global.name.value == 'dark'" required></VueDatePicker>
                         </v-col>
-                        <v-col cols="2">
+                        <!-- <v-col cols="2">
                             <v-select
                                 :items="[{ name: 'disabled', value: 0 }, { name: 'daily', value: 1 }, { name: 'weekly', value: 2 }, { name: 'monthly', value: 3 }]"
                                 item-title="name" item-value="value" v-model="event.repeat" label="repeat" variant="outlined"></v-select>
-                        </v-col>
+                        </v-col> -->
                         <v-col cols="12">
                             <v-textarea v-model="event.description" label="Description*" variant="outlined"
                                 required></v-textarea>
